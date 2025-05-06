@@ -1,41 +1,18 @@
-import json
-import os
+import redis
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-DATA_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'recipes.json'))
-
-if not os.path.exists(DATA_FILE):
-    try:
-        with open(DATA_FILE, 'w') as f:
-            json.dump([], f)
-    except Exception as e:
-        print(f"Error creating the file {DATA_FILE}: {e}")
+redis_client = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
 
 def read_data():
-    try:
-        with open(DATA_FILE, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"File not found: {DATA_FILE}")
-        return []
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON from file: {DATA_FILE}")
-        return []
-
-def write_data(data):
-    try:
-        with open(DATA_FILE, 'w') as f:
-            json.dump(data, f, indent=4)
-    except Exception as e:
-        print(f"Error writing to the file {DATA_FILE}: {e}")
+    recipes = redis_client.hgetall("recipes")
+    return [eval(recipe) for recipe in recipes.values()] 
 
 @app.route('/recipes', methods=['POST'])
 def create_recipe():
     data = request.get_json()
-    recipes = read_data()
-    recipe_id = len(recipes) + 1
+    recipe_id = redis_client.incr("recipe_id") 
     new_recipe = {
         "id": recipe_id,
         "name": data['name'],
@@ -43,46 +20,54 @@ def create_recipe():
         "category": data.get('category', ''),
         "ratings": []
     }
-    recipes.append(new_recipe)
-    write_data(recipes)
+    redis_client.hset("recipes", recipe_id, str(new_recipe))  
     return jsonify(new_recipe), 201
 
 @app.route('/recipes', methods=['GET'])
 def get_recipes():
-    return jsonify(read_data())
+    recipes = read_data()
+    return jsonify(recipes)
 
 @app.route('/recipes/<int:recipe_id>', methods=['GET'])
 def get_recipe(recipe_id):
-    recipes = read_data()
-    recipe = next((r for r in recipes if r['id'] == recipe_id), None)
+    recipe = redis_client.hget("recipes", recipe_id)
     if recipe is None:
         return jsonify({'error': 'Recipe not found'}), 404
-    return jsonify(recipe)
+    return jsonify(eval(recipe))
 
 @app.route('/recipes/<int:recipe_id>', methods=['PUT'])
 def update_recipe(recipe_id):
     data = request.get_json()
-    recipes = read_data()
-    recipe = next((r for r in recipes if r['id'] == recipe_id), None)
+    recipe = redis_client.hget("recipes", recipe_id)
     if recipe is None:
         return jsonify({'error': 'Recipe not found'}), 404
+    recipe = eval(recipe)
     recipe.update({
         "name": data['name'],
         "description": data.get('description', recipe['description']),
         "category": data.get('category', recipe['category'])
     })
-    write_data(recipes)
+    redis_client.hset("recipes", recipe_id, str(recipe))
     return jsonify(recipe)
 
 @app.route('/recipes/<int:recipe_id>', methods=['DELETE'])
 def delete_recipe(recipe_id):
-    recipes = read_data()
-    recipe = next((r for r in recipes if r['id'] == recipe_id), None)
-    if recipe is None:
+    deleted = redis_client.hdel("recipes", recipe_id)
+    if not deleted:
         return jsonify({'error': 'Recipe not found'}), 404
-    recipes.remove(recipe)
-    write_data(recipes)
     return jsonify({'message': 'Recipe deleted successfully'})
+
+@app.route('/set/<key>/<value>')
+def set_value(key, value):
+    redis_client.set(key, value)
+    return f"Key '{key}' set to '{value}'"
+
+@app.route('/get/<key>')
+def get_value(key):
+    value = redis_client.get(key)
+    if value is None:
+        return f"Key '{key}' not found", 404
+    return f"Key '{key}' has value '{value}'"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

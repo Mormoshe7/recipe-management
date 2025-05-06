@@ -1,8 +1,107 @@
 [
     {
-        "id": 1,
-        "name": "Spaghetti",
-        "description": "A classic Italian dish",
+        "id": 2,
+        "name": "Caesar Salad",
+        "description": "A fresh salad with romaine lettuce, croutons, and Caesar dressing",
+        "category": "Appetizer",
+        "ratings": [
+            4,
+            5
+        ],
+        "ingredients": [
+            "romaine lettuce",
+            "croutons",
+            "Caesar dressing",
+            "parmesan cheese"
+        ],
+        "cooking_time": 10,
+        "instructions": "Mix all ingredients in a large bowl and top with Caesar dressing."
+    },
+    {
+        "id": 3,
+        "name": "Chocolate Cake",
+        "description": "A rich and moist chocolate cake with creamy chocolate frosting",
+        "category": "Dessert",
+        "ratings": [
+            5,
+            5,
+            4,
+            5
+        ],
+        "ingredients": [
+            "flour",
+            "sugar",
+            "cocoa powder",
+            "eggs",
+            "butter",
+            "milk"
+        ],
+        "cooking_time": 60,
+        "instructions": "Mix dry and wet ingredients separately, then combine. Bake at 180\u05b2\u00b0C for 45 minutes."
+    },
+    {
+        "id": 4,
+        "name": "Grilled Salmon",
+        "description": "Perfectly grilled salmon with a hint of lemon and dill",
+        "category": "Main Course",
+        "ratings": [
+            4,
+            4,
+            5
+        ],
+        "ingredients": [
+            "salmon",
+            "lemon",
+            "dill",
+            "salt",
+            "pepper"
+        ],
+        "cooking_time": 20,
+        "instructions": "Preheat the grill. Season the salmon with lemon, dill, salt, and pepper. Grill for 10 minutes on each side."
+    },
+    {
+        "id": 5,
+        "name": "Garlic Bread",
+        "description": "Crispy bread with garlic butter and parsley",
+        "category": "Side Dish",
+        "ratings": [
+            5,
+            5,
+            5,
+            4
+        ],
+        "ingredients": [
+            "bread",
+            "garlic",
+            "butter",
+            "parsley"
+        ],
+        "cooking_time": 15,
+        "instructions": "Spread garlic butter on slices of bread. Sprinkle parsley and bake at 200\u05b2\u00b0C for 10 minutes."
+    },
+    {
+        "id": 6,
+        "name": "Pizza",
+        "description": "Italian pizza with tomato sauce and cheese",
+        "category": "Main Course",
+        "ratings": [
+            4,
+            5,
+            3
+        ],
+        "ingredients": [
+            "pizza dough",
+            "tomato sauce",
+            "mozzarella cheese",
+            "basil"
+        ],
+        "cooking_time": 30,
+        "instructions": "Spread tomato sauce on pizza dough. Add cheese and basil. Bake at 220\u05b2\u00b0C for 15 minutes."
+    },
+    {
+        "id": 6,
+        "name": "Pizza",
+        "description": "Delicious Italian dish",
         "category": "Main Course",
         "ratings": []
     }
