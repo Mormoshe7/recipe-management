@@ -12,8 +12,42 @@ This project is a basic recipe management service built with Flask. Recipes are 
 - Flask
 - Redis (for production)
 
+ ## Prerequisites
+
+Before you can run the project, ensure that both Git and Docker are installed on your machine.
+Installing Git:
+
+If Git is not installed on your machine, run the following command in PowerShell as Administrator:
+
+      winget install --id Git.Git -e --source winget
+
+After installation, verify that Git is installed by running:
+
+    git --version
+
+    This should display the installed version of Git.
+
+Installing Docker:
+
+To install Docker Desktop, run the following command in PowerShell as Administrator:
+
+      winget install --id Docker.DockerDesktop -e --source winget
+
+After installation, restart your computer to ensure Docker is properly set up.
+
+Once the computer restarts, make sure Docker is running by checking for the Docker whale icon in the taskbar. You can also verify Docker installation by running:
+
+      docker --version
+      docker compose version
+
 ## Setup
-1. Clone the repository to your local machine:
+Open Command Prompt (CMD) from the project's folder:
+
+- Navigate to the project folder in File Explorer.
+
+- In the address bar at the top of the window, type cmd and press Enter. This will open Command Prompt directly in the project directory.
+
+1.Clone the repository to your local machine:
    ```bash
    git clone https://github.com/Mormoshe7/recipe-management.git
    cd recipe-management
@@ -27,7 +61,7 @@ This project is a basic recipe management service built with Flask. Recipes are 
 
 3. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r web-service/requirements.txt
    ```
 
 4. Run the service:
