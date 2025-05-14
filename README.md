@@ -1,7 +1,7 @@
 # Recipe Management Service
 
 ## Overview
-This project is a basic recipe management service built with Flask. Recipes are stored in a Redis (depending on configuration).
+This project is a basic recipe management service built with Flask. Recipes are stored in a Redis.
 
 ## Features
 - Add, view, update, and delete recipes.
