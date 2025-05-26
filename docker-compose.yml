@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.8' # not really needed
 
 services:
   web:
@@ -21,6 +21,6 @@ services:
     ports:
       - "6379:6379"
 
-volumes:
+volumes: # not really needed
   redis_data:
     driver: local

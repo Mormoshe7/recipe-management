@@ -81,8 +81,8 @@ Open Command Prompt (CMD) from the project's folder:
 2. Access the service at `http://127.0.0.1:5000`.
 
 ## API Endpoints
-- `POST /recipes` - Add a new recipe.
+- `POST /recipes` - Add a new recipe. - what the endpoint accept as body?
 - `GET /recipes` - Get all recipes.
 - `GET /recipes/<id>` - Get a specific recipe.
-- `PUT /recipes/<id>` - Update a recipe.
+- `PUT /recipes/<id>` - Update a recipe. - what the endpoint accept as body?
 - `DELETE /recipes/<id>` - Delete a recipe.
